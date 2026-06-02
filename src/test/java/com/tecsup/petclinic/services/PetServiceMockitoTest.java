@@ -5,7 +5,6 @@ import com.tecsup.petclinic.entities.Pet;
 import com.tecsup.petclinic.exceptions.PetNotFoundException;
 import com.tecsup.petclinic.mapper.PetMapper;
 import com.tecsup.petclinic.repositories.PetRepository;
-import com.tecsup.petclinic.util.TObjectCreator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,7 +42,7 @@ public class PetServiceMockitoTest {
     @Test
     public void testFindPetById() {
 
-        Pet petExpected = new Pet(1,"Leo",1,1, null);
+        Pet petExpected = Pet.builder().id(1).name("Leo").typeId(1).ownerId(1).build();
 
         Mockito.when(this.repository.findById(1))
                 .thenReturn((Optional.of(petExpected)));
@@ -69,7 +68,8 @@ public class PetServiceMockitoTest {
 
         String FIND_NAME = "Leo";
 
-        List<Pet> petsExpected = TObjectCreator.getPetsForFindByName();
+        List<Pet> petsExpected = List.of(
+                Pet.builder().id(1).name("Leo").typeId(1).ownerId(1).build());
 
         Mockito.when(this.repository.findByName(FIND_NAME))
                 .thenReturn(petsExpected);
@@ -87,7 +87,9 @@ public class PetServiceMockitoTest {
 
         int TYPE_ID = 5;
 
-        List<Pet> petsExpected = TObjectCreator.getPetsForFindByTypeId();
+        List<Pet> petsExpected = List.of(
+                Pet.builder().id(9).name("Lucky").typeId(5).ownerId(7).build(),
+                Pet.builder().id(11).name("Freddy").typeId(5).ownerId(9).build());
 
         Mockito.when(this.repository.findByTypeId(TYPE_ID))
                 .thenReturn(petsExpected);
@@ -105,7 +107,9 @@ public class PetServiceMockitoTest {
 
         int OWNER_ID = 10;
 
-        List<Pet> petsExpected = TObjectCreator.getPetsForFindByOwnerId();
+        List<Pet> petsExpected = List.of(
+                Pet.builder().id(12).name("Lucky").typeId(2).ownerId(10).build(),
+                Pet.builder().id(13).name("Sly").typeId(1).ownerId(10).build());
 
         Mockito.when(this.repository.findByOwnerId(OWNER_ID))
                 .thenReturn(petsExpected);
@@ -127,8 +131,8 @@ public class PetServiceMockitoTest {
     public void testCreatePet() {
 
 
-        Pet newPet = TObjectCreator.newPet();
-        Pet newPetCreated = TObjectCreator.newPetCreated();
+        Pet newPet = Pet.builder().id(0).name("Punky").typeId(1).ownerId(1).build();
+        Pet newPetCreated = Pet.builder().id(1000).name("Punky").typeId(1).ownerId(1).build();
 
         PetDTO newPetDTO = this.petMapper.mapToDto(newPet);
         PetDTO hopePetDTOCreated = this.petMapper.mapToDto(newPetCreated);
@@ -158,8 +162,8 @@ public class PetServiceMockitoTest {
         int UP_OWNER_ID = 2;
         int UP_TYPE_ID = 2;
 
-        Pet newPet = TObjectCreator.newPetForUpdate();
-        Pet newPetCreate = TObjectCreator.newPetCreatedForUpdate();
+        Pet newPet = Pet.builder().id(0).name("Bear").typeId(1).ownerId(1).build();
+        Pet newPetCreate = Pet.builder().id(4000).name("Bear").typeId(1).ownerId(1).build();
 
         PetDTO newPetDTO = petMapper.mapToDto(newPet);
         PetDTO hopePetDTOCreate = petMapper.mapToDto(newPetCreate);
@@ -203,8 +207,8 @@ public class PetServiceMockitoTest {
     @Test
     public void testDeletePet() {
 
-        Pet newPet = TObjectCreator.newPetForDelete();
-        Pet newPetCreate = TObjectCreator.newPetCreatedForDelete();
+        Pet newPet = Pet.builder().id(0).name("Bird").typeId(1).ownerId(1).build();
+        Pet newPetCreate = Pet.builder().id(2000).name("Bird").typeId(1).ownerId(1).build();
 
         PetDTO newPetDTO = this.petMapper.mapToDto(newPet);
 

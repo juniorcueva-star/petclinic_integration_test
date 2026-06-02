@@ -8,7 +8,6 @@ import com.tecsup.petclinic.exceptions.PetNotFoundException;
 import com.tecsup.petclinic.mapper.PetMapper;
 import com.tecsup.petclinic.repositories.PetRepository;
 import com.tecsup.petclinic.services.PetService;
-import com.tecsup.petclinic.util.TObjectCreator;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -68,7 +67,12 @@ public class PetControllerMockitoTest {
 		int NRO_RECORD = 5;
 		int ID_FIRST_RECORD = 1;
 
-		List<PetDTO> petTOs  = TObjectCreator.getAllPetTOs();
+		List<PetDTO> petTOs  = List.of(
+				PetDTO.builder().id(1).name("Leo").typeId(1).ownerId(1).birthDate("2000-09-07").build(),
+				PetDTO.builder().id(2).name("Basil").typeId(6).ownerId(2).birthDate("2002-08-06").build(),
+				PetDTO.builder().id(3).name("Rosy").typeId(2).ownerId(3).birthDate("2001-04-17").build(),
+				PetDTO.builder().id(4).name("Jewel").typeId(2).ownerId(3).birthDate("2000-03-07").build(),
+				PetDTO.builder().id(5).name("Iggy").typeId(3).ownerId(4).birthDate("2000-11-30").build());
 
 		List<Pet> pets  = this.mapper.mapToEntityList(petTOs);
 
@@ -93,7 +97,7 @@ public class PetControllerMockitoTest {
 	@Test
 	public void testFindPetOK() throws Exception {
 
-		PetDTO petTO  = TObjectCreator.getPetTO();
+		PetDTO petTO  = PetDTO.builder().id(1).name("Leo").typeId(1).ownerId(1).birthDate("2000-09-07").build();
 
 		//Pet pet  = this.mapper.mapToEntity(petTO);
 
@@ -134,7 +138,7 @@ public class PetControllerMockitoTest {
 	@Test
 	public void testCreatePet() throws Exception {
 
-		PetDTO newPetTO  = TObjectCreator.newPetTO();
+		PetDTO newPetTO  = PetDTO.builder().id(-1).name("Beethoven").typeId(1).ownerId(1).birthDate("2020-05-20").build();
 
 		//Pet newPet  = this.mapper.mapToEntity(newPetTO);
 
@@ -164,7 +168,7 @@ public class PetControllerMockitoTest {
 
 		// ------------ Create ---------------
 
-		PetDTO newPetTO  = TObjectCreator.newPetTOForDelete();
+		PetDTO newPetTO  = PetDTO.builder().id(10000).name("Beethoven3").typeId(1).ownerId(1).birthDate("2020-05-20").build();
 
 		//Pet newPet  = this.mapper.mapToEntity(newPetTO);
 
