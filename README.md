@@ -20,7 +20,7 @@
 
 
 
-# JUNIOR UEVA 
+# JUNIOR CUEVA 
 ## 5 Crear la funcionalidad de pruebas de integración para la entidad Types.
 <img width="1063" height="557" alt="image" src="https://github.com/user-attachments/assets/0c3c6fbf-b774-4e71-9488-940acd0c53b4" />
 
